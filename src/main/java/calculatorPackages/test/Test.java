@@ -3,44 +3,74 @@ package calculatorPackages.test;
 import java.util.Scanner;
 
 public class Test {
-
 	public static void main(String[] args) {
 
-		Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-		System.out.println("insert first value");
+        double result;
+        double numero;
+        char operation;
 
-		double a = scan.nextDouble();
+        result = response(scanner," insert first value ");
 
-		System.out.println("insert operation");
+        while (true) {
 
-		char operation = scan.next().charAt(0);
+            System.out.print("choose operation (+, -, *, / ou =): ");
+            operation = scanner.next().charAt(0);
 
-		System.out.println("insert second value");
+            if (operation == '=') {
+                break;
+            }
 
-		double b = scan.nextDouble();
+            if (operation != '+' && operation != '-'
+                    && operation != '*' && operation != '/') {
 
-		if (operation == '+') {
-			System.out.println("Resultado: " + (a + b));
+                System.out.println("invalid operation!");
+                continue;
+            }
 
-		} else if (operation == '-') {
-			System.out.println("Resultado: " + (a - b));
+            numero = response(scanner, "insert next value ");
 
-		} else if (operation == '*') {
-			System.out.println("Resultado: " + (a * b));
+            if (operation == '+') {
+                result += numero;
 
-		} else if (operation == '/') {
-			if (b != 0) {
-				System.out.println("Resultado: " + (a / b));
-			} else {
-				System.out.println("Erro: divisao por zero!");
-			}
+            } else if (operation == '-') {
+                result -= numero;
 
-		} else {
-			System.out.println("operation invalida!");
-		}
+            } else if (operation == '*') {
+                result *= numero;
 
-		scan.close();
-	}
+            } else if (operation == '/') {
 
+                if (numero != 0) {
+                    result /= numero;
+                } else {
+                    System.out.println("Error: division by zero");
+                    continue;
+                }
+            }
+
+            System.out.println("Parcial: " + result);
+        }
+
+        System.out.println("result final: " + result);
+
+        scanner.close();
+    }
+
+    public static double response(Scanner scanner, String mensagem) {
+
+        while (true) {
+
+            System.out.print(mensagem);
+
+            if (scanner.hasNextDouble()) {
+                return scanner.nextDouble();
+
+            } else {
+                System.out.println("invalid entry, number only");
+                scanner.next();
+            }
+        }
+    }
 }
